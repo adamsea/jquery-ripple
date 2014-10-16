@@ -1,6 +1,7 @@
 [data-ripple] {
 	border: none;
 	outline: none;
+	overflow: hidden;
 	position: relative;
 }
 
