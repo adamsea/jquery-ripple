@@ -1,0 +1,36 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>jQuery Ripple</title>
+        <meta name="description" content="jQuery Ripple">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="bower_components/normalize.css/normalize.css">
+        <link rel="stylesheet" href="jquery.ripple.css">
+    </head>
+    <style>
+        .container {
+            box-sizing: border-box;
+            margin: 0 auto;
+            max-width: 960px;
+            padding: 20px;
+            width: 100%;
+        }
+    </style>
+    <body>
+        <section class="container">
+            <h3>jQuery Ripple</h3>
+
+            <h4>Simple Button</h4>
+            <button data-ripple>Run Effect</button>
+        </section>
+
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="jquery.ripple.js"></script>
+
+        <script>
+            $('[data-ripple]').ripple();
+        </script>
+    </body>
+</html>
