@@ -1,0 +1,27 @@
+{
+  "name": "jquery-ripple",
+  "version": "0.0.1",
+  "authors": [
+    "Eric Adams <adams.ea@gmail.com>"
+  ],
+  "description": "jQuery Plugin for a ripple effect inspired by Google Material Design",
+  "main": "jquery.ripple.js",
+  "keywords": [
+    "jQuery",
+    "Plugins",
+    "effects"
+  ],
+  "license": "MIT",
+  "homepage": "http://codemill.studio-connect.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1"
+  }
+}
