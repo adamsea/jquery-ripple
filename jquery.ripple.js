@@ -1,34 +1,51 @@
+/**
+ * jQuery plugin to produce the ripple effect from the Google Material Design spec:
+ * http://www.google.com/design/spec/animation/responsive-interaction.html
+ *
+ * This plugin was modified from a codepen simulating the effect:
+ * http://codepen.io/Craigtut/pen/dIfzv
+ */
 (function($) {
 
+	/**
+	 * jQuery.fn.ripple
+	 * @param {Object} options
+	 * @param {String} [options.event=mousedown] The interaction event
+	 * @param {String} [options.color=#fff] The ripple effect color
+	 */
 	$.fn.ripple = function(options) {
 		var opts = $.extend({}, {
 				event: 'mousedown',
 				color: '#fff'
 			}, options);
 
+		// Bind the event to run the effect
 		$(this).on(opts.event, function(ev) {
-			var $ripple,
-				$elem = $(this),
-				$div = $('<div/>'),
-				btnOffset = $elem.offset(),
-				xPos = ev.pageX - btnOffset.left,
-				yPos = ev.pageY - btnOffset.top;
+			var x, y,
+				$paper = $(this),
+				$ink = $('<div/>'),
+				size = Math.max($paper.width(), $paper.height());
 
-			ev.preventDefault();
+			// Set up ripple styles
+			$ink.addClass('ripple-effect');
+			$ink.css({
+				height: size,
+				width: size
+			});
 
-			$div.addClass('ripple-effect');
-			$ripple = $('.ripple-effect');
+			// get click coordinates
+			// logic = click coordinates relative to page
+			// - position relative to page - half of self height/width to make it controllable from the center
+			x = ev.pageX - $paper.offset().left - $ink.width()/2;
+			y = ev.pageY - $paper.offset().top - $ink.height()/2;
 
-			$ripple.css('height', $elem.height());
-			$ripple.css('width', $elem.height());
-			$div.css({
-				top: yPos - ($ripple.height()/2),
-				left: xPos - ($ripple.width()/2),
-				background: opts.color
-			}).appendTo($elem);
+			// Set up ripple position and place it in the DOM
+			$ink.css({top: y + 'px', left: x + 'px', backgroundColor: opts.color})
+				.appendTo($paper);
 
+			// Remove the div after animation is complete
 			window.setTimeout(function(){
-				$div.remove();
+				$ink.remove();
 			}, 2000);
 		});
 	};
