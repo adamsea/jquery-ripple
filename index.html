@@ -17,20 +17,50 @@
             padding: 20px;
             width: 100%;
         }
+        .example {
+            border-bottom: 1px solid #eee;
+            margin: 10px 0;
+            padding: 10px 0;
+        }
+        .example-1, .example-2 {
+            border: none;
+            outline: none;
+            padding: 25px 75px;
+        }
+        .example-2 {
+            background-color: #fff;
+            border: 1px solid #eee;
+        }
     </style>
     <body>
         <section class="container">
             <h3>jQuery Ripple</h3>
 
-            <h4>Simple Button</h4>
-            <button data-ripple>Run Effect</button>
+            <div class="example">
+                <h4>Simple Button</h4>
+                <button class="example-1" data-ripple>Run Effect</button>
+                <h5>Code:</h5>
+                <code>
+                    $('.example-1[data-ripple]').ripple();
+                </code>
+            </div>
+
+            <div class="example">
+                <h4>Alternate Colors</h4>
+                <button class="example-2" data-ripple>Run Effect</button>
+                <h5>Code:</h5>
+                <code>
+                    $('.example-2[data-ripple]').ripple({ color: 'rgba(14,98,221,0.7)' });
+                </code>
+            </div>
         </section>
 
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
         <script src="jquery.ripple.js"></script>
 
         <script>
-            $('[data-ripple]').ripple();
+            $('.example-1[data-ripple]').ripple();
+            $('.example-2[data-ripple]').ripple({ color: 'rgba(14,98,221,0.7)' });
         </script>
     </body>
 </html>
