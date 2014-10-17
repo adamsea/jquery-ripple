@@ -13,7 +13,7 @@
   ],
   "license": "MIT",
   "homepage": "http://codemill.studio-connect.com",
-  "private": true,
+  "private": false,
   "ignore": [
     "**/.*",
     "node_modules",
