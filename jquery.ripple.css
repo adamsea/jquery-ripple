@@ -1,21 +1,22 @@
 [data-ripple] {
-	border: none;
-	outline: none;
 	overflow: hidden;
 	position: relative;
 }
 
 .ripple-effect {
-	border-radius: 50%;
-	height: 50px;
+	height: 40px;
 	position: absolute;
-	width: 50px;
+	width: 40px;
 
 	-webkit-animation: ripple 2s;
 	-moz-animation: ripple 2s;
 	-ms-animation: ripple 2s;
 	-o-animation: ripple 2s;
 	animation: ripple 2s;
+
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
 }
 
 @-webkit-keyframes ripple {
