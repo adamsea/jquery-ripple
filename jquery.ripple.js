@@ -7,6 +7,20 @@
  */
 (function($) {
 
+	// Check if an event is supported - stripped down version
+	// from http://perfectionkills.com/detecting-event-support-without-browser-sniffing/
+	function isEventSupported(eventName) {
+		var el = document.createElement('div');
+		eventName = 'on' + eventName;
+		var isSupported = (eventName in el);
+		if (!isSupported) {
+			el.setAttribute(eventName, 'return;');
+			isSupported = typeof el[eventName] == 'function';
+		}
+		el = null;
+		return isSupported;
+	}
+
 	/**
 	 * jQuery.fn.ripple
 	 * @param {Object} options
@@ -15,7 +29,7 @@
 	 */
 	$.fn.ripple = function(options) {
 		var opts = $.extend({}, {
-				event: 'mousedown',
+				event: isEventSupported('touchstart') && 'touchstart' || 'mousedown',
 				color: '#fff'
 			}, options);
 
