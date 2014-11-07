@@ -41,6 +41,7 @@
 				size = Math.max($paper.width(), $paper.height());
 
 			// Set up ripple styles
+			$paper.addClass('ripple-active');
 			$ink.addClass('ripple-effect');
 			$ink.css({
 				height: size,
@@ -58,7 +59,8 @@
 				.appendTo($paper);
 
 			// Remove the div after animation is complete
-			window.setTimeout(function(){
+			window.setTimeout(function() {
+				$paper.removeClass('ripple-active');
 				$ink.remove();
 			}, 2000);
 		});
