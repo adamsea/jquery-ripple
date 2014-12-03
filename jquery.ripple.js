@@ -5,7 +5,7 @@
  * This plugin was modified from a codepen simulating the effect:
  * http://codepen.io/Craigtut/pen/dIfzv
  */
-(function($) {
+(function($, ua) {
 
 	// Check if an event is supported - stripped down version
 	// from http://perfectionkills.com/detecting-event-support-without-browser-sniffing/
@@ -21,6 +21,12 @@
 		return isSupported;
 	}
 
+	// Better testing of touch support
+	// See https://github.com/ngryman/jquery.finger/blob/v0.1.2/dist/jquery.finger.js#L7
+	var isChrome = /chrome/i.exec(ua);
+	var isAndroid = /android/i.exec(ua);
+	var hasTouch = isEventSupported('touchstart') && !(isChrome && !isAndroid);
+
 	/**
 	 * jQuery.fn.ripple
 	 * @param {Object} options
@@ -29,13 +35,13 @@
 	 */
 	$.fn.ripple = function(options) {
 		var opts = $.extend({}, {
-				event: isEventSupported('touchstart') && 'touchstart' || 'mousedown',
+				event: hasTouch && 'touchstart' || 'mousedown',
 				color: '#fff'
 			}, options);
 
 		// Bind the event to run the effect
 		$(this).on(opts.event, function(ev) {
-			var x, y,
+			var x, y, touch_ev,
 				$paper = $(this),
 				$ink = $('<div/>'),
 				size = Math.max($paper.width(), $paper.height());
@@ -51,8 +57,9 @@
 			// get click coordinates
 			// logic = click coordinates relative to page
 			// - position relative to page - half of self height/width to make it controllable from the center
-			x = ev.pageX - $paper.offset().left - $ink.width()/2;
-			y = ev.pageY - $paper.offset().top - $ink.height()/2;
+			touch_ev = hasTouch ? event.originalEvent.touches[0] : event;
+			x = touch_ev.pageX - $paper.offset().left - $ink.width()/2;
+			y = touch_ev.pageY - $paper.offset().top - $ink.height()/2;
 
 			// Set up ripple position and place it in the DOM
 			$ink.css({top: y + 'px', left: x + 'px', backgroundColor: opts.color})
@@ -66,4 +73,4 @@
 		});
 	};
 
-}(jQuery));
+}(jQuery, navigator.userAgent));
