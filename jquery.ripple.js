@@ -7,25 +7,11 @@
  */
 (function($, ua) {
 
-	// Check if an event is supported - stripped down version
-	// from http://perfectionkills.com/detecting-event-support-without-browser-sniffing/
-	function isEventSupported(eventName) {
-		var el = document.createElement('div');
-		eventName = 'on' + eventName;
-		var isSupported = (eventName in el);
-		if (!isSupported) {
-			el.setAttribute(eventName, 'return;');
-			isSupported = typeof el[eventName] == 'function';
-		}
-		el = null;
-		return isSupported;
-	}
-
 	// Better testing of touch support
 	// See https://github.com/ngryman/jquery.finger/blob/v0.1.2/dist/jquery.finger.js#L7
 	var isChrome = /chrome/i.exec(ua);
 	var isAndroid = /android/i.exec(ua);
-	var hasTouch = isEventSupported('touchstart') && !(isChrome && !isAndroid);
+	var hasTouch = 'ontouchstart' in window && !(isChrome && !isAndroid);
 
 	/**
 	 * jQuery.fn.ripple
@@ -57,7 +43,7 @@
 			// get click coordinates
 			// logic = click coordinates relative to page
 			// - position relative to page - half of self height/width to make it controllable from the center
-			touch_ev = hasTouch ? event.originalEvent.touches[0] : event;
+			touch_ev = hasTouch ? ev.originalEvent.touches[0] : ev;
 			x = touch_ev.pageX - $paper.offset().left - $ink.width()/2;
 			y = touch_ev.pageY - $paper.offset().top - $ink.height()/2;
 
