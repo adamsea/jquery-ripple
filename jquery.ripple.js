@@ -9,21 +9,18 @@
 
 	// Better testing of touch support
 	// See https://github.com/ngryman/jquery.finger/blob/v0.1.2/dist/jquery.finger.js#L7
-	var isChrome = /chrome/i.exec(ua);
-	var isAndroid = /android/i.exec(ua);
-	var hasTouch = 'ontouchstart' in window && !(isChrome && !isAndroid);
+	var isChrome = /chrome/i.exec(ua),
+		isAndroid = /android/i.exec(ua),
+		hasTouch = 'ontouchstart' in window && !(isChrome && !isAndroid);
 
 	/**
 	 * jQuery.fn.ripple
 	 * @param {Object} options
-	 * @param {String} [options.event=mousedown] The interaction event
 	 * @param {String} [options.color=#fff] The ripple effect color
 	 */
 	$.fn.ripple = function(options) {
-		var opts = $.extend({}, {
-				event: hasTouch && 'touchstart' || 'mousedown',
-				color: '#fff'
-			}, options);
+		var opts = $.extend({}, { color: '#fff' }, options);
+		opts.event = (hasTouch && 'touchstart') || 'mousedown';
 
 		// Bind the event to run the effect
 		$(this).on(opts.event, function(ev) {
@@ -33,6 +30,7 @@
 				size = Math.max($paper.width(), $paper.height());
 
 			// Set up ripple styles
+			$paper.trigger('beforeripple');
 			$paper.addClass('ripple-active');
 			$ink.addClass('ripple-effect');
 			$ink.css({
@@ -53,10 +51,19 @@
 
 			// Remove the div after animation is complete
 			window.setTimeout(function() {
+				$paper.trigger('afterripple');
 				$paper.removeClass('ripple-active');
 				$ink.remove();
 			}, 2000);
+
+			// Trigger a delayed event for the element
+			window.setTimeout(function() {
+				$paper.trigger('ripple');
+			}, 150);
 		});
+
+		// Chaining
+		return $(this);
 	};
 
-}(jQuery, navigator.userAgent));
+}(window.jQuery, navigator.userAgent));
