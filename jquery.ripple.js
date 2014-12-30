@@ -50,11 +50,11 @@
 				.appendTo($paper);
 
 			// Remove the div after animation is complete
-			window.setTimeout(function() {
+			$ink.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function() {
 				$paper.trigger('afterripple');
 				$paper.removeClass('ripple-active');
 				$ink.remove();
-			}, 2000);
+			});
 
 			// Trigger a delayed event for the element
 			window.setTimeout(function() {
