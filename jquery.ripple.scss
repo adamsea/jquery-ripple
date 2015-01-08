@@ -17,9 +17,19 @@
 	-o-animation: ripple 2s;
 	animation: ripple 2s;
 
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
 	border-radius: 50%;
+
+	-webkit-transition: background-color .25s ease .1s;
+	-moz-transition: background-color .25s ease .1s;
+	-ms-transition: background-color .25s ease .1s;
+	-o-transition: background-color .25s ease .1s;
+	transition: background-color .25s ease .1s;
 }
 
 @-webkit-keyframes ripple {
@@ -29,7 +39,7 @@
 	}
 	to {
 		-webkit-transform: scale(100);
-		opacity: 0;
+		opacity: 0.25;
 	}
 }
 
@@ -40,7 +50,7 @@
 	}
 	to {
 		-moz-transform: scale(100);
-		opacity: 0;
+		opacity: 0.25;
 	}
 }
 
@@ -51,7 +61,7 @@
 	}
 	to {
 		-ms-transform: scale(100);
-		opacity: 0;
+		opacity: 0.25;
 	}
 }
 
@@ -62,7 +72,7 @@
 	}
 	to {
 		-o-transform: scale(100);
-		opacity: 0;
+		opacity: 0.25;
 	}
 }
 
@@ -73,6 +83,6 @@
 	}
 	to {
 		transform: scale(100);
-		opacity: 0;
+		opacity: 0.25;
 	}
 }

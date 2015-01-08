@@ -20,7 +20,8 @@
 	 */
 	$.fn.ripple = function(options) {
 		var opts = $.extend({}, { color: '#fff' }, options);
-		opts.event = (hasTouch && 'touchstart') || 'mousedown';
+		opts.event = (hasTouch && 'touchstart.ripple') || 'mousedown.ripple';
+		opts.end_event = (hasTouch && 'touchend.ripple mouseleave.ripple') || 'mouseup.ripple mouseleave.ripple';
 
 		// Bind the event to run the effect
 		$(this).on(opts.event, function(ev) {
@@ -49,17 +50,24 @@
 			$ink.css({top: y + 'px', left: x + 'px', backgroundColor: opts.color})
 				.appendTo($paper);
 
-			// Remove the div after animation is complete
-			$ink.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function() {
-				$paper.trigger('afterripple');
-				$paper.removeClass('ripple-active');
-				$ink.remove();
-			});
-
 			// Trigger a delayed event for the element
 			window.setTimeout(function() {
 				$paper.trigger('ripple');
 			}, 150);
+		});
+
+		// Bind the event to end the paper-press ripple
+		$(this).on(opts.end_event, function(ev) {
+			var $paper = $(this),
+				$ink = $paper.find('.ripple-effect');
+			$paper
+				.trigger('afterripple')
+				.removeClass('ripple-active');
+			$ink
+				.css('background-color', 'rgba(255, 255, 255, 0)')
+				.one('transitionend', function() {
+					$ink.remove();
+				});
 		});
 
 		// Chaining
