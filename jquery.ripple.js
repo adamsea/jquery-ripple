@@ -7,9 +7,13 @@
  */
 (function($, ua) {
 
-	// Better testing of touch support
-	// See https://github.com/ngryman/jquery.finger/blob/v0.1.2/dist/jquery.finger.js#L7
-	var isChrome = /chrome/i.exec(ua),
+	var
+		// setTimeout reference
+		timer = null,
+
+		// Better testing of touch support
+		// See https://github.com/ngryman/jquery.finger/blob/v0.1.2/dist/jquery.finger.js#L7
+		isChrome = /chrome/i.exec(ua),
 		isAndroid = /android/i.exec(ua),
 		hasTouch = 'ontouchstart' in window && !(isChrome && !isAndroid);
 
@@ -30,7 +34,7 @@
 				$ink = $('<div/>'),
 				size = Math.max($paper.width(), $paper.height());
 
-			// Set up ripple styles
+			// Set up ripple effect styles
 			$paper
 				.trigger('beforeripple')
 				.addClass('ripple-active');
@@ -51,16 +55,31 @@
 			// Set up ripple position and place it in the DOM
 			$ink
 				.css({top: y + 'px', left: x + 'px', backgroundColor: opts.color})
-				.one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
-					$paper.trigger('ripple');
-				})
 				.appendTo($paper);
+
+			// Delayed trigger
+			timer = setTimeout(function() {
+				$paper.trigger('ripple');
+			}, 2000);
 		});
 
 		// Bind the event to end the paper-press ripple
-		$(this).on(opts.end_event, function() {
+		$(this).on(opts.end_event, function(ev) {
 			var $paper = $(this),
 				$ink = $paper.find('.ripple-effect');
+
+			// Trigger the ripple if we hadn't yet
+			if (timer) {
+				clearTimeout(timer);
+				timer = null;
+
+				// Run custom event if the ripple was fired during mousedown/touch
+				if (ev.type !== 'mouseleave') {
+					$paper.trigger('ripple');
+				}
+			}
+
+			// Remove ripple effect styles
 			$paper
 				.trigger('afterripple')
 				.removeClass('ripple-active');
