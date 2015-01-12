@@ -31,13 +31,15 @@
 				size = Math.max($paper.width(), $paper.height());
 
 			// Set up ripple styles
-			$paper.trigger('beforeripple');
-			$paper.addClass('ripple-active');
-			$ink.addClass('ripple-effect');
-			$ink.css({
-				height: size,
-				width: size
-			});
+			$paper
+				.trigger('beforeripple')
+				.addClass('ripple-active');
+			$ink
+				.addClass('ripple-effect')
+				.css({
+					height: size,
+					width: size
+				});
 
 			// get click coordinates
 			// logic = click coordinates relative to page
@@ -47,17 +49,16 @@
 			y = touch_ev.pageY - $paper.offset().top - $ink.height()/2;
 
 			// Set up ripple position and place it in the DOM
-			$ink.css({top: y + 'px', left: x + 'px', backgroundColor: opts.color})
+			$ink
+				.css({top: y + 'px', left: x + 'px', backgroundColor: opts.color})
+				.one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
+					$paper.trigger('ripple');
+				})
 				.appendTo($paper);
-
-			// Trigger a delayed event for the element
-			window.setTimeout(function() {
-				$paper.trigger('ripple');
-			}, 150);
 		});
 
 		// Bind the event to end the paper-press ripple
-		$(this).on(opts.end_event, function(ev) {
+		$(this).on(opts.end_event, function() {
 			var $paper = $(this),
 				$ink = $paper.find('.ripple-effect');
 			$paper
@@ -65,7 +66,7 @@
 				.removeClass('ripple-active');
 			$ink
 				.css('background-color', 'rgba(255, 255, 255, 0)')
-				.one('transitionend', function() {
+				.one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
 					$ink.remove();
 				});
 		});
