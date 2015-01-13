@@ -59,7 +59,11 @@
 
 			// Delayed trigger
 			timer = setTimeout(function() {
-				$paper.trigger('ripple');
+				if (!$paper.data('ripple')) {
+					$paper
+						.data('ripple', true)
+						.trigger('ripple');
+				}
 			}, 2000);
 		});
 
@@ -74,8 +78,10 @@
 				timer = null;
 
 				// Run custom event if the ripple was fired during mousedown/touch
-				if (ev.type !== 'mouseleave') {
-					$paper.trigger('ripple');
+				if (ev.type !== 'mouseleave' && !$paper.data('ripple')) {
+					$paper
+						.data('ripple', true)
+						.trigger('ripple');
 				}
 			}
 
@@ -87,6 +93,7 @@
 				.css('background-color', 'rgba(255, 255, 255, 0)')
 				.one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
 					$ink.remove();
+					$paper.removeData('ripple');
 				});
 		});
 
