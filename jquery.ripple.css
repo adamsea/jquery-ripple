@@ -1,85 +1,87 @@
 [data-ripple] {
-	overflow: hidden;
-	position: relative;
+    overflow: hidden;
+    position: relative;
+
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 .ripple-effect {
-	height: 40px;
-	position: absolute;
-	width: 40px;
+    height: 40px;
+    position: absolute;
+    width: 40px;
 
-	-webkit-animation: ripple 2s;
-	-moz-animation: ripple 2s;
-	-ms-animation: ripple 2s;
-	-o-animation: ripple 2s;
-	animation: ripple 2s;
+    -webkit-animation: ripple 2s;
+    -moz-animation: ripple 2s;
+    -ms-animation: ripple 2s;
+    -o-animation: ripple 2s;
+    animation: ripple 2s;
 
-	-webkit-animation-fill-mode: forwards;
-	-moz-animation-fill-mode: forwards;
-	animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
 
-	-webkit-border-radius: 50%;
-	-moz-border-radius: 50%;
-	border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
 
-	-webkit-transition: background-color .25s ease .1s;
-	-moz-transition: background-color .25s ease .1s;
-	-ms-transition: background-color .25s ease .1s;
-	-o-transition: background-color .25s ease .1s;
-	transition: background-color .25s ease .1s;
+    -webkit-transition: background-color .25s ease .1s;
+    -moz-transition: background-color .25s ease .1s;
+    -ms-transition: background-color .25s ease .1s;
+    -o-transition: background-color .25s ease .1s;
+    transition: background-color .25s ease .1s;
 }
 
 @-webkit-keyframes ripple {
-	from {
-		-webkit-transform: scale(1);
-		opacity: 0.4;
-	}
-	to {
-		-webkit-transform: scale(100);
-		opacity: 0.25;
-	}
+    from {
+        -webkit-transform: scale(1);
+        opacity: 0.4;
+    }
+    to {
+        -webkit-transform: scale(100);
+        opacity: 0.25;
+    }
 }
 
 @-moz-keyframes ripple {
-	from {
-		-moz-transform: scale(1);
-		opacity: 0.4;
-	}
-	to {
-		-moz-transform: scale(100);
-		opacity: 0.25;
-	}
+    from {
+        -moz-transform: scale(1);
+        opacity: 0.4;
+    }
+    to {
+        -moz-transform: scale(100);
+        opacity: 0.25;
+    }
 }
 
 @-ms-keyframes ripple {
-	from {
-		-ms-transform: scale(1);
-		opacity: 0.4;
-	}
-	to {
-		-ms-transform: scale(100);
-		opacity: 0.25;
-	}
+    from {
+        -ms-transform: scale(1);
+        opacity: 0.4;
+    }
+    to {
+        -ms-transform: scale(100);
+        opacity: 0.25;
+    }
 }
 
 @-o-keyframes ripple {
-	from {
-		-o-transform: scale(1);
-		opacity: 0.4;
-	}
-	to {
-		-o-transform: scale(100);
-		opacity: 0.25;
-	}
+    from {
+        -o-transform: scale(1);
+        opacity: 0.4;
+    }
+    to {
+        -o-transform: scale(100);
+        opacity: 0.25;
+    }
 }
 
 @keyframes ripple {
-	from {
-		transform: scale(1);
-		opacity: 0.4;
-	}
-	to {
-		transform: scale(100);
-		opacity: 0.25;
-	}
+    from {
+        transform: scale(1);
+        opacity: 0.4;
+    }
+    to {
+        transform: scale(100);
+        opacity: 0.25;
+    }
 }

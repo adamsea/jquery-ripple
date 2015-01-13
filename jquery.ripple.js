@@ -7,98 +7,92 @@
  */
 (function($, ua) {
 
-	var
-		// setTimeout reference
-		timer = null,
+    var
+        // setTimeout reference
+        timer = null,
 
-		// Better testing of touch support
-		// See https://github.com/ngryman/jquery.finger/blob/v0.1.2/dist/jquery.finger.js#L7
-		isChrome = /chrome/i.exec(ua),
-		isAndroid = /android/i.exec(ua),
-		hasTouch = 'ontouchstart' in window && !(isChrome && !isAndroid);
+        // Better testing of touch support
+        // See https://github.com/ngryman/jquery.finger/blob/v0.1.2/dist/jquery.finger.js#L7
+        isChrome = /chrome/i.exec(ua),
+        isAndroid = /android/i.exec(ua),
+        hasTouch = 'ontouchstart' in window && !(isChrome && !isAndroid),
 
-	/**
-	 * jQuery.fn.ripple
-	 * @param {Object} options
-	 * @param {String} [options.color=#fff] The ripple effect color
-	 */
-	$.fn.ripple = function(options) {
-		var opts = $.extend({}, { color: '#fff' }, options);
-		opts.event = (hasTouch && 'touchstart.ripple') || 'mousedown.ripple';
-		opts.end_event = (hasTouch && 'touchend.ripple mouseleave.ripple') || 'mouseup.ripple mouseleave.ripple';
+        // Notify applications of the ripple effect
+        setRipple = function($paper) {
+            if (!$paper.data('ripple')) {
+                $paper
+                    .data('ripple', true)
+                    .trigger('ripple');
+            }
+        };
 
-		// Bind the event to run the effect
-		$(this).on(opts.event, function(ev) {
-			var x, y, touch_ev,
-				$paper = $(this),
-				$ink = $('<div/>'),
-				size = Math.max($paper.width(), $paper.height());
+    /**
+     * jQuery.fn.ripple
+     * @param {Object} options
+     * @param {String} [options.color=#fff] The ripple effect color
+     */
+    $.fn.ripple = function(options) {
+        var opts = $.extend({}, { color: '#fff' }, options);
+        opts.event = (hasTouch && 'touchstart.ripple') || 'mousedown.ripple';
+        opts.end_event = (hasTouch && 'touchend.ripple mouseleave.ripple') || 'mouseup.ripple mouseleave.ripple';
 
-			// Set up ripple effect styles
-			$paper
-				.trigger('beforeripple')
-				.addClass('ripple-active');
-			$ink
-				.addClass('ripple-effect')
-				.css({
-					height: size,
-					width: size
-				});
+        $(this)
+            // Bind the event to run the effect
+            .on(opts.event, function(ev) {
+                var x, y, touch_ev,
+                    $paper = $(this),
+                    $ink = $('<div/>'),
+                    size = Math.max($paper.width(), $paper.height());
 
-			// get click coordinates
-			// logic = click coordinates relative to page
-			// - position relative to page - half of self height/width to make it controllable from the center
-			touch_ev = hasTouch ? ev.originalEvent.touches[0] : ev;
-			x = touch_ev.pageX - $paper.offset().left - $ink.width()/2;
-			y = touch_ev.pageY - $paper.offset().top - $ink.height()/2;
+                // Set up ripple effect styles
+                $paper
+                    .trigger('beforeripple')
+                    .addClass('ripple-active');
+                $ink
+                    .addClass('ripple-effect')
+                    .css({height: size, width: size});
 
-			// Set up ripple position and place it in the DOM
-			$ink
-				.css({top: y + 'px', left: x + 'px', backgroundColor: opts.color})
-				.appendTo($paper);
+                // get click coordinates
+                // logic = click coordinates relative to page
+                // - position relative to page - half of self height/width to make it controllable from the center
+                touch_ev = hasTouch ? ev.originalEvent.touches[0] : ev;
+                x = touch_ev.pageX - $paper.offset().left - $ink.width()/2;
+                y = touch_ev.pageY - $paper.offset().top - $ink.height()/2;
 
-			// Delayed trigger
-			timer = setTimeout(function() {
-				if (!$paper.data('ripple')) {
-					$paper
-						.data('ripple', true)
-						.trigger('ripple');
-				}
-			}, 2000);
-		});
+                // Set up ripple position and place it in the DOM
+                $ink
+                    .css({top: y + 'px', left: x + 'px', backgroundColor: opts.color})
+                    .appendTo($paper);
 
-		// Bind the event to end the paper-press ripple
-		$(this).on(opts.end_event, function(ev) {
-			var $paper = $(this),
-				$ink = $paper.find('.ripple-effect');
+                // Delayed trigger
+                timer = setTimeout(function() { setRipple($paper); }, 2000);
+            })
+            // Bind the event to end the paper-press ripple
+            .on(opts.end_event, function(ev) {
+                var $paper = $(this),
+                    $ink = $paper.find('.ripple-effect');
 
-			// Trigger the ripple if we hadn't yet
-			if (timer) {
-				clearTimeout(timer);
-				timer = null;
+                // Trigger the ripple if we hadn't yet
+                if (timer) {
+                    clearTimeout(timer);
+                    timer = null;
+                    setRipple($paper);
+                }
 
-				// Run custom event if the ripple was fired during mousedown/touch
-				if (ev.type !== 'mouseleave' && !$paper.data('ripple')) {
-					$paper
-						.data('ripple', true)
-						.trigger('ripple');
-				}
-			}
+                // Remove ripple effect styles
+                $paper
+                    .trigger('afterripple')
+                    .removeClass('ripple-active');
+                $ink
+                    .css({backgroundColor: 'transparent'})
+                    .one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
+                        $ink.remove();
+                        $paper.removeData('ripple');
+                    });
+            });
 
-			// Remove ripple effect styles
-			$paper
-				.trigger('afterripple')
-				.removeClass('ripple-active');
-			$ink
-				.css('background-color', 'rgba(255, 255, 255, 0)')
-				.one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
-					$ink.remove();
-					$paper.removeData('ripple');
-				});
-		});
-
-		// Chaining
-		return $(this);
-	};
+        // Chaining
+        return $(this);
+    };
 
 }(window.jQuery, navigator.userAgent));
