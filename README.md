@@ -32,6 +32,7 @@ jQuery-ripple can be installed through [Bower](http://bower.io/).
     ```
     $('[data-ripple]').ripple();
     ```
+
 ###Customization###
 
 Optionally, you can pass a different CSS color to use for the ripple ink:
