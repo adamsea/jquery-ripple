@@ -34,7 +34,7 @@
     $.fn.ripple = function(options) {
         var opts = $.extend({}, { color: '#fff' }, options);
         opts.event = (hasTouch && 'touchstart.ripple') || 'mousedown.ripple';
-        opts.end_event = (hasTouch && 'touchend.ripple mouseleave.ripple') || 'mouseup.ripple mouseleave.ripple';
+        opts.end_event = (hasTouch && 'touchend.ripple mouseleave.ripple') || 'mouseup.ripple';
 
         $(this)
             // Bind the event to run the effect
