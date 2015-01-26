@@ -40,3 +40,13 @@ Optionally, you can pass a different CSS color to use for the ripple ink:
 ```
 $('[data-ripple]').ripple({ color: '#EF5734' });
 ```
+
+###Events###
+
+jQuery-ripple introduces three events that you can hook into for additional functionality:
+
+| Event Name | Description |
+|----------------|-----------------------------------------------------------------------------------------------------|
+| *'beforeripple'* | Fired on touchstart/mousedown before ripple-active class is added to the DOM |
+| *'ripple'* | Fired after 2 seconds (animation length) or on touchend/mouseup/mouseleave, whichever happens first |
+| *'afterripple'* | Fired on touchend/mouseup/mouseleave before ripple-active class is removed from the DOM |
