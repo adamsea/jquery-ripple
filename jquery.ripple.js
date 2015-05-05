@@ -8,23 +8,11 @@
 (function($, ua) {
 
     var
-        // setTimeout reference
-        timer = null,
-
         // Better testing of touch support
         // See https://github.com/ngryman/jquery.finger/blob/v0.1.2/dist/jquery.finger.js#L7
         isChrome = /chrome/i.exec(ua),
         isAndroid = /android/i.exec(ua),
-        hasTouch = 'ontouchstart' in window && !(isChrome && !isAndroid),
-
-        // Notify applications of the ripple effect
-        setRipple = function($paper) {
-            if (!$paper.data('ripple')) {
-                $paper
-                    .data('ripple', true)
-                    .trigger('ripple');
-            }
-        };
+        hasTouch = 'ontouchstart' in window && !(isChrome && !isAndroid);
 
     /**
      * jQuery.fn.ripple
@@ -63,21 +51,11 @@
                 $ink
                     .css({top: y + 'px', left: x + 'px', backgroundColor: opts.color})
                     .appendTo($paper);
-
-                // Delayed trigger
-                timer = setTimeout(function() { setRipple($paper); }, 2000);
             })
             // Bind the event to end the paper-press ripple
-            .on(opts.end_event, function(ev) {
+            .on(opts.end_event, function() {
                 var $paper = $(this),
                     $ink = $paper.find('.ripple-effect');
-
-                // Trigger the ripple if we hadn't yet
-                if (timer) {
-                    clearTimeout(timer);
-                    timer = null;
-                    setRipple($paper);
-                }
 
                 // Remove ripple effect styles
                 $paper
@@ -87,7 +65,6 @@
                     .css({backgroundColor: 'transparent'})
                     .one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
                         $ink.remove();
-                        $paper.removeData('ripple');
                     });
             });
 

@@ -9,9 +9,8 @@
 }
 
 .ripple-effect {
-    height: 40px;
+    display: block;
     position: absolute;
-    width: 40px;
 
     -webkit-animation: ripple 2s;
     -moz-animation: ripple 2s;

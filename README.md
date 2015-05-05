@@ -48,5 +48,4 @@ jQuery-ripple introduces three events that you can hook into for additional func
 | Event Name | Description |
 |----------------|-----------------------------------------------------------------------------------------------------|
 | *'beforeripple'* | Fired on touchstart/mousedown before ripple-active class is added to the DOM |
-| *'ripple'* | Fired after 2 seconds (animation length) or on touchend/mouseup/mouseleave, whichever happens first |
 | *'afterripple'* | Fired on touchend/mouseup/mouseleave before ripple-active class is removed from the DOM |
