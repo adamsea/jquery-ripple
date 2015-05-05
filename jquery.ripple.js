@@ -20,9 +20,10 @@
      * @param {String} [options.color=#fff] The ripple effect color
      */
     $.fn.ripple = function(options) {
-        var opts = $.extend({}, { color: '#fff' }, options);
+        var rippled = false,
+            opts = $.extend({}, { color: '#fff' }, options);
         opts.event = (hasTouch && 'touchstart.ripple') || 'mousedown.ripple';
-        opts.end_event = (hasTouch && 'touchend.ripple mouseleave.ripple') || 'mouseup.ripple';
+        opts.end_event = (hasTouch && 'touchend.ripple touchcancel.ripple') || 'mouseup.ripple mouseleave.ripple';
 
         $(this)
             // Bind the event to run the effect
@@ -31,6 +32,8 @@
                     $paper = $(this),
                     $ink = $('<div/>'),
                     size = Math.max($paper.width(), $paper.height());
+
+                rippled = true;
 
                 // Set up ripple effect styles
                 $paper
@@ -56,6 +59,13 @@
             .on(opts.end_event, function() {
                 var $paper = $(this),
                     $ink = $paper.find('.ripple-effect');
+
+                // We don't want to run the afterripple
+                // events if the user hasn't started a ripple
+                if (!rippled) {
+                    return;
+                }
+                rippled = false;
 
                 // Remove ripple effect styles
                 $paper
