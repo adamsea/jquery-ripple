@@ -14,13 +14,13 @@ jQuery-ripple can be installed through [Bower](http://bower.io/).
 1. Include the required jquery.ripple.css in the head section of your document.
 
     ```
-    <link rel="stylesheet" href="bower_components/jquery.ripple/jquery.ripple.css">
+    <link rel="stylesheet" href="bower_components/jquery-ripple/jquery.ripple.css">
     ```
 2. Include the latest version of jQuery and jQuery-ripple in your document.
 
     ```
     <script src="//code.jquery.com/jquery-latest.min.js"></script>
-    <script src="bower_components/jquery.ripple/jquery.ripple.js"></script>
+    <script src="bower_components/jquery-ripple/jquery.ripple.js"></script>
     ```
 3. Create an element with the `[data-ripple]` data attribute defined.
 
