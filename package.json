@@ -1,0 +1,24 @@
+{
+  "name": "jquery-ripple",
+  "version": "0.2.1",
+  "description": "jQuery Plugin for a ripple effect inspired by Google Material Design",
+  "main": "jquery.ripple.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamsea/jquery-ripple.git"
+  },
+  "keywords": [
+    "jQuery",
+    "Plugins",
+    "effects"
+  ],
+  "author": "Eric Adams <adams.ea@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adamsea/jquery-ripple/issues"
+  },
+  "homepage": "https://github.com/adamsea/jquery-ripple#readme"
+}
