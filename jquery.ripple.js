@@ -21,11 +21,16 @@
      */
     $.fn.ripple = function(options) {
         var rippled = false,
-            opts = $.extend({}, { color: '#fff' }, options);
-        opts.event = (hasTouch && 'touchstart.ripple') || 'mousedown.ripple';
-        opts.end_event = (hasTouch && 'touchend.ripple touchcancel.ripple') || 'mouseup.ripple mouseleave.ripple';
+            opts = $.extend({}, {
+                color: '#fff',
+                timeout: 2000
+            }, options),
+            $this = $(this);
 
-        $(this)
+        opts.event = opts.event || (hasTouch && 'touchstart.ripple') || 'mousedown.ripple';
+        opts.end_event = opts.end_event || (hasTouch && 'touchend.ripple touchcancel.ripple') || 'mouseup.ripple mouseleave.ripple';
+
+        $this
             // Bind the event to run the effect
             .on(opts.event, function(ev) {
                 var x, y, touch_ev,
@@ -78,8 +83,14 @@
                     });
             });
 
+        if (opts.timeout) {
+            setTimeout(function() {
+                $this.trigger(opts.end_event);
+            }, opts.timeout);
+        }
+
         // Chaining
-        return $(this);
+        return $this;
     };
 
 }(window.jQuery, navigator.userAgent));
