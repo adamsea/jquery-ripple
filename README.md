@@ -3,13 +3,13 @@ jQuery-ripple
 
 A jQuery Plugin for a ripple effect inspired by Google Material Design.
 
-###Installation###
+### Installation
 
 jQuery-ripple can be installed through [Bower](http://bower.io/).
 
     $ bower install jquery.ripple --save
 
-###Usage###
+### Usage
 
 1. Include the required jquery.ripple.css in the head section of your document.
 
@@ -33,7 +33,7 @@ jQuery-ripple can be installed through [Bower](http://bower.io/).
     $('[data-ripple]').ripple();
     ```
 
-###Customization###
+### Customization
 
 Optionally, you can pass a different CSS color to use for the ripple ink:
 
@@ -41,7 +41,7 @@ Optionally, you can pass a different CSS color to use for the ripple ink:
 $('[data-ripple]').ripple({ color: '#EF5734' });
 ```
 
-###Events###
+### Events
 
 jQuery-ripple introduces three events that you can hook into for additional functionality:
 
